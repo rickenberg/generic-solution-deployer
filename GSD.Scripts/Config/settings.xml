@@ -3,14 +3,20 @@
 	<PromptForCredentials>false</PromptForCredentials>
 	<CreateNewPSSession>true</CreateNewPSSession>
 	<Variables>
-		<Variable name="sourceFolder" value="AllFiles" />
-		<Variable name="targetFolder" value="d:\solution\AllFiles" />
+		<Variable name="sourceFolder" />
+		<Variable name="targetPath" />
 	</Variables>
   <Environments>
     <Environment name="DEV">
       <Variables>
-        <Variable name="sourceFolder" value="AllFiles" />
-        <Variable name="targetFolder" value="d:\solution\AllFiles" />
+        <Variable name="sourceFolder">AllFiles</Variable>
+        <Variable name="targetPath">d:\solution\AllFiles</Variable>
+      </Variables>
+    </Environment>
+    <Environment name="TEST">
+      <Variables>
+        <Variable name="sourceFolder">AllFiles</Variable>
+        <Variable name="targetPath">d:\solution\AllFiles-TEST</Variable>
       </Variables>
     </Environment>
   </Environments>

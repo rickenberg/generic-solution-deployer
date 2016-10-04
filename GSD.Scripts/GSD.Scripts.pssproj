@@ -43,9 +43,7 @@
     <Compile Include="Core\GsdCore.psd1" />
     <Compile Include="Core\Logging.psd1" />
     <Compile Include="Core\Logging.psm1" />
-    <Compile Include="Events\01-CustomEvents.ps1" />
-    <Compile Include="Events\02-CustomEvents.ps1" />
-    <Compile Include="Events\03-CustomEvents.ps1" />
+    <Compile Include="Events\01-CopyFiles.ps1" />
     <Compile Include="gsd.ps1" />
   </ItemGroup>
   <ItemGroup>

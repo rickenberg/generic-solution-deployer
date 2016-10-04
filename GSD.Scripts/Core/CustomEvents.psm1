@@ -23,12 +23,13 @@ Function Import-CustomEvents() {
 	$customEventFiles = Get-ChildItem ".\Events" | Where {$_.Name -like "*.ps1"} 
 	$customEventFiles | ForEach { 
 		Write-GsdLog -Message "- loading $_" -Level $GSD.LogLevel.Normal
-		$script = Get-Content .\Events\$_
+        # Keep line breaks - otherwise multi-line functions might break
+		$script = (Get-Content .\Events\$_) -Join "`n"
 		$customEventScript = @{}
 		$customEventScript.FileName = $_
 		$customEventScript.Script = $script
         # Load PS script into current session
-		$customEventScript.ScriptBlock = $ExecutionContext.InvokeCommand.NewScriptBlock($script)
+        $customEventScript.ScriptBlock = [scriptblock]::Create($script)
 		$customEventScripts += $customEventScript
         Write-GsdLog -Message "- loaded successfully" -Level $GSD.LogLevel.Success
 	}
@@ -58,8 +59,8 @@ Function Test-CustomEvents() {
 
     if (!$isValid) {
 	    # Set the exit code and stop the script
-		$Host.SetShouldExit(1)
-		Exit
+		#$Host.SetShouldExit(1)
+		#Exit
     }
 }
 
@@ -71,7 +72,7 @@ Function Invoke-CustomEventsPreDeploy($customEventScripts) {
 
     $customEventScripts | ForEach {
         Write-GsdLog -Message "- running OnPreDeploy from $($_.FileName)" -Level $GSD.LogLevel.Normal -Indent
-	    . $_.ScriptBlock
+        . $_.ScriptBlock
 	    Execute-OnPreDeploy
         Pop-GsdIndentLevel
     }
@@ -85,7 +86,7 @@ Function Invoke-CustomEventsDeploy($customEventScripts) {
 
     $customEventScripts | ForEach {
         Write-GsdLog -Message "- running OnDeploy from $($_.FileName)" -Level $GSD.LogLevel.Normal -Indent
-	    . $_.ScriptBlock
+        . $_.ScriptBlock
 	    Execute-OnDeploy
         Pop-GsdIndentLevel
     }
@@ -99,7 +100,7 @@ Function Invoke-CustomEventsPostDeploy($customEventScripts) {
 
     $customEventScripts | ForEach {
 	    Write-GsdLog -Message "- running OnPostDeploy from $($_.FileName)" -Level $GSD.LogLevel.Normal -Indent
-	    . $_.ScriptBlock
+        . $_.ScriptBlock
 	    Execute-OnPostDeploy
         Pop-GsdIndentLevel
     }

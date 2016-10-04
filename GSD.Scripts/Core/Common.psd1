@@ -64,7 +64,7 @@
 	CmdletsToExport = '*'
 
 	# Variables to export from this module
-	VariablesToExport = @('GSD','LogDir','BaseDir','LogIndentVal','DeploymentCommand','DeploymentCommandTitle','TargetEnvironment')
+	VariablesToExport = @('GSD')
 
 	# Aliases to export from this module
 	AliasesToExport = '*'

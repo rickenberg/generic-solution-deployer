@@ -14,9 +14,9 @@
 #>
 
 # Variables from this module to be exported. They are used for general settings.
-$GSD, $LogDir, $BaseDir, $LogIndentVal, $DeploymentCommand, $DeploymentCommandTitle, $TargetEnvironment = $null
+$GSD = $null
 
-Function Initialize-Script($scriptPath) {
+Function Initialize-Script($ScriptPath, $Command, $Environment) {
 	<#
 	  .SYNOPSIS
 	  Initializes the main GSD script. Sets global variables and parses the command line parameters.
@@ -40,13 +40,15 @@ Function Initialize-Script($scriptPath) {
 	                        Redeploy    = 2
 	                        Update      = 3
 	                    }
+                        LogIndentVal = 0
+                        BaseDir = $ScriptPath
+                        LogDir = Get-DirOrCreateIt -path "$($ScriptPath)\Logs"
+						SolutionDir = "$($ScriptPath)\Solution"
+                        TargetEnvironment = $Environment
 	                }
-	$Script:LogIndentVal = 0
-	$Script:BaseDir = $scriptPath
-	$Script:LogDir = Get-DirOrCreateIt -path ($baseDir + "\Logs")
-    [int]$Script:DeploymentCommand = Get-Parameter -value $Command -values $GSD.Commands -default $GSD.Commands.Deploy
-	$Script:DeploymentCommandTitle = Get-ParameterName -value $Command -values $GSD.Commands
-	$Script:TargetEnvironment = $Environment
+
+    $Script:GSD.DeploymentCommand = Get-Parameter -value $Command -values $GSD.Commands -default $GSD.Commands.Deploy
+    $Script:GSD.DeploymentCommandTitle = Get-ParameterName -value $Command -values $GSD.Commands
 }
 
 Function Get-DirOrCreateIt($path) {
@@ -95,4 +97,4 @@ Function Get-ParameterName([string]$value = $(throw "You have to specify the des
 }
 
 # Work-around for variable export. It is not enough to set this in psd1 file. No idea why.
-Export-ModuleMember -Variable @('GSD','LogDir','BaseDir','LogIndentVal','DeploymentCommand','DeploymentCommandTitle','TargetEnvironment') -Function "*"
+Export-ModuleMember -Variable @('GSD') -Function "*"

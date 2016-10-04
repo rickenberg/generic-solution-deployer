@@ -25,12 +25,16 @@ Function Write-Log([string]$Message, [int]$Level, [switch]$NoNewline, [switch]$I
 	  Log level (integer) - Use the global enum $GSD.LogLevel - to specify the level suc as error or sucess
 
 	  .PARAMETER NoNewline
+      Does not create a new line when logging
 
 	  .PARAMETER Indent
+      Increases the indentation
 
 	  .PARAMETER Outdent
+      Decreases the indentation
 
 	  .PARAMETER NoIndent
+      No indentation is used (no matter what the current level is)
 	#>
 
 	# TODO
@@ -48,7 +52,7 @@ Function Write-Log([string]$Message, [int]$Level, [switch]$NoNewline, [switch]$I
 	}
 	if($Outdent){ Pop-IndentLevel }
 	if(!$NoIndent){
-	    $indentChars = " " * (2 * $Script:LogIndentVal)
+	    $indentChars = " " * (2 * $GSD.LogIndentVal)
 	}
 
 		$loggingHost = (Get-Host).Name
@@ -77,9 +81,9 @@ Function Pop-IndentLevel() {
 	  Decrease the indentation level of the log
 	#>
 
-	$Script:LogIndentVal--
-	if($Script:LogIndentVal -lt 0){
-	    $Script:LogIndentVal = 0
+	$GSD.LogIndentVal--
+	if($GSD.LogIndentVal -lt 0){
+	    $GSD.LogIndentVal = 0
 	}
 }
 
@@ -89,7 +93,7 @@ Function Push-IndentLevel() {
 	  Increase the indentation level of the log
 	#>
 
-	$Script:LogIndentVal++
+	$GSD.LogIndentVal++
 }
 
 Function Start-Tracing() {
@@ -98,10 +102,10 @@ Function Start-Tracing() {
 	  Start tracing the PowerShell Output to a file
 	#>
 
-	$script:LogTime = Get-Date -Format yyyyMMdd-HHmmss
-	$script:LogFile = "$LogDir\$LogTime-$DeploymentCommandTitle.log"
+	$Script:LogTime = Get-Date -Format yyyyMMdd-HHmmss
+	$Script:LogFile = "$($GSD.LogDir)\$LogTime-$($GSD.DeploymentCommandTitle).log"
     if((Get-Host).Name -eq "ConsoleHost" -and -not $isAppHost){
-	    Start-Transcript -Path $LogFile -Force
+	    Start-Transcript -Path $logFile -Force
     }
 	$script:ElapsedTime = [System.Diagnostics.Stopwatch]::StartNew()
 }
