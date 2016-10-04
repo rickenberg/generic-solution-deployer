@@ -1,0 +1,18 @@
+<Settings>
+	<LogLevel>Verbose</LogLevel>
+	<PromptForCredentials>false</PromptForCredentials>
+	<CreateNewPSSession>true</CreateNewPSSession>
+	<Variables>
+		<Variable name="sourceFolder" value="AllFiles" />
+		<Variable name="targetFolder" value="d:\solution\AllFiles" />
+	</Variables>
+  <Environments>
+    <Environment name="DEV">
+      <Variables>
+        <Variable name="sourceFolder" value="AllFiles" />
+        <Variable name="targetFolder" value="d:\solution\AllFiles" />
+      </Variables>
+    </Environment>
+  </Environments>
+</Settings>
+

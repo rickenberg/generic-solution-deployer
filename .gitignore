@@ -243,3 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/GSD.Scripts/Solution/AllFiles
+/GSD.Scripts/Config/step.01-CopyFiles.xml

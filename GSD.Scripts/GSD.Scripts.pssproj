@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{c4a79e02-fc0b-4ee1-880b-ad78c16d772c}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MyApplication</RootNamespace>
+    <AssemblyName>MyApplication</AssemblyName>
+    <Name>GSD.Scripts</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Config\" />
+    <Folder Include="Core\" />
+    <Folder Include="Events\" />
+    <Folder Include="Logs\" />
+    <Folder Include="Modules\" />
+    <Folder Include="Solution\" />
+    <Folder Include="Solution\AllFiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Common.psd1" />
+    <Compile Include="Core\Common.psm1" />
+    <Compile Include="Core\CustomEvents.psd1" />
+    <Compile Include="Core\CustomEvents.psm1" />
+    <Compile Include="Core\GsdCore.psd1" />
+    <Compile Include="Core\Logging.psd1" />
+    <Compile Include="Core\Logging.psm1" />
+    <Compile Include="Events\01-CustomEvents.ps1" />
+    <Compile Include="Events\02-CustomEvents.ps1" />
+    <Compile Include="Events\03-CustomEvents.ps1" />
+    <Compile Include="gsd.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\settings.xml" />
+    <Content Include="Config\step.01-CopyFiles.xml" />
+    <Content Include="Solution\AllFiles\App.config" />
+    <Content Include="Solution\AllFiles\HelloWorldJob.cs" />
+    <Content Include="Solution\AllFiles\HelloWorldTimerJob.csproj" />
+    <Content Include="Solution\AllFiles\packages.config" />
+    <Content Include="Solution\AllFiles\Program.cs" />
+    <Content Include="Solution\AllFiles\SharePointContext.cs" />
+    <Content Include="Solution\AllFiles\TokenHelper.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Target Name="Build" />
+</Project>
