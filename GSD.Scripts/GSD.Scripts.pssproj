@@ -36,6 +36,8 @@
     <Folder Include="Solution\AllFiles\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Configuration.psd1" />
+    <Compile Include="Core\Configuration.psm1" />
     <Compile Include="Core\Common.psd1" />
     <Compile Include="Core\Common.psm1" />
     <Compile Include="Core\CustomEvents.psd1" />

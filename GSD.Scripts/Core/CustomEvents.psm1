@@ -23,13 +23,13 @@ Function Import-CustomEvents() {
 	$customEventFiles = Get-ChildItem ".\Events" | Where {$_.Name -like "*.ps1"} 
 	$customEventFiles | ForEach { 
 		Write-GsdLog -Message "- loading $_" -Level $GSD.LogLevel.Normal
-        # Keep line breaks - otherwise multi-line functions might break
+        # Keep line breaks - otherwise multi-line functions will break
 		$script = (Get-Content .\Events\$_) -Join "`n"
 		$customEventScript = @{}
 		$customEventScript.FileName = $_
-		$customEventScript.Script = $script
+		$customEventScript.Script = ReplaceVariables -script $script
         # Load PS script into current session
-        $customEventScript.ScriptBlock = [scriptblock]::Create($script)
+        $customEventScript.ScriptBlock = [scriptblock]::Create($customEventScript.Script)
 		$customEventScripts += $customEventScript
         Write-GsdLog -Message "- loaded successfully" -Level $GSD.LogLevel.Success
 	}
@@ -104,4 +104,27 @@ Function Invoke-CustomEventsPostDeploy($customEventScripts) {
 	    Execute-OnPostDeploy
         Pop-GsdIndentLevel
     }
+}
+
+Function ReplaceVariables ($script) {
+	<# 
+		.SYNOPSIS
+        Finds all variables denoted with {{name}} in the script and replaces with values from config
+	#>
+
+    $matchEvaluator = {
+        $match = $args[0]
+
+        if ($GSDConfig.Variables.ContainsKey($match.Groups[1].Value)) {
+            # Variable found in current config
+            return $GSDConfig.Variables[$match.Groups[1].Value]
+        } else {
+            # Handle error
+            return ""
+        }
+    }
+
+    $regex = [regex] "\{\{([^}]+)\}\}"
+    return $regex.Replace($script, $matchEvaluator)
+    #return $script -replace "\{\{[^}]+\}\}","test"
 }

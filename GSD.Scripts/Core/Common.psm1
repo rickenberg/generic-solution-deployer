@@ -42,6 +42,8 @@ Function Initialize-Script($ScriptPath, $Command, $Environment) {
 	                    }
                         LogIndentVal = 0
                         BaseDir = $ScriptPath
+						ConfigDir = "$($ScriptPath)\Config"
+						SettingsFilePath = "$($ScriptPath)\Config\settings.xml"
                         LogDir = Get-DirOrCreateIt -path "$($ScriptPath)\Logs"
 						SolutionDir = "$($ScriptPath)\Solution"
                         TargetEnvironment = $Environment
@@ -49,6 +51,11 @@ Function Initialize-Script($ScriptPath, $Command, $Environment) {
 
     $Script:GSD.DeploymentCommand = Get-Parameter -value $Command -values $GSD.Commands -default $GSD.Commands.Deploy
     $Script:GSD.DeploymentCommandTitle = Get-ParameterName -value $Command -values $GSD.Commands
+
+	# Set default environment to DEV
+	if ([System.String]::IsNullOrWhiteSpace($Script:GSD.TargetEnvironment)) {
+		$Script:GSD.TargetEnvironment = "DEV"
+	}
 }
 
 Function Get-DirOrCreateIt($path) {

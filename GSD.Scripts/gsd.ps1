@@ -19,6 +19,7 @@ Set-Location $scriptPath
 
 # Load GSD core modules
 Import-Module .\Core\Common -Force -Prefix Gsd
+Import-Module .\Core\Configuration -Force -Prefix Gsd
 Import-Module .\Core\Logging -Force -Prefix Gsd
 Import-Module .\Core\CustomEvents -Force -Prefix Gsd
 
@@ -34,6 +35,7 @@ Pop-GsdIndentLevel
 
 # 1. Load configuration
 Write-GsdLog -Message "LOAD: Loading configuration" -Level $GSD.LogLevel.Normal -Indent
+Get-GsdConfig
 Pop-GsdIndentLevel
 
 # 2. Load modules

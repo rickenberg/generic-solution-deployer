@@ -1,13 +1,18 @@
 <Settings>
-	<LogLevel>Verbose</LogLevel>
-	<PromptForCredentials>false</PromptForCredentials>
-	<CreateNewPSSession>true</CreateNewPSSession>
+    <Gsd>
+	    <LogLevel>Warning</LogLevel>
+	    <PromptForCredentials>false</PromptForCredentials>
+	    <CreateNewPSSession>true</CreateNewPSSession>
+    </Gsd>
 	<Variables>
-		<Variable name="sourceFolder" />
-		<Variable name="targetPath" />
+		<Variable name="sourceFolder">test</Variable>
+		<Variable name="targetPath"><![CDATA[test test]]></Variable>
 	</Variables>
   <Environments>
     <Environment name="DEV">
+      <Gsd>
+	    <LogLevel></LogLevel>
+      </Gsd>
       <Variables>
         <Variable name="sourceFolder">AllFiles</Variable>
         <Variable name="targetPath">d:\solution\AllFiles</Variable>

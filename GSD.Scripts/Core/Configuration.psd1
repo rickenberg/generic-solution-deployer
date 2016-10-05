@@ -1,25 +1,25 @@
 @{
 
 	# Script module or binary module file associated with this manifest
-	RootModule = 'Common.psm1'
+	RootModule = 'Configuration.psm1'
 
 	# Version number of this module.
 	ModuleVersion = '1.0'
 
 	# ID used to uniquely identify this module
-	GUID = '62B9126E-A923-41A4-824B-041346BBEE83'
+	GUID = '5A072F4D-2EA8-46EF-8B19-8A4699AC4AE7'
 
 	# Author of this module
-	Author = 'Bernd Rickenberg, Matthias Einig'
+	Author = 'Bernd Rickenberg'
 
 	# Company or vendor of this module
-	CompanyName = ''
+	CompanyName = '62F4D419-DEA4-4EE5-9E41-569856FA9A7D'
 
 	# Copyright statement for this module
-	Copyright = '(c) 2016 Bernd Rickenberg, Matthias Einig. All rights reserved.'
+	Copyright = '(c) 2016 Bernd Rickenberg. All rights reserved.'
 
 	# Description of the functionality provided by this module
-	Description = 'Core module for Generic Solution Deployer. Implements handling logging functionality.'
+	Description = 'Core module for Generic Solution Deployer. Implements configuration of the GSD.'
 
 	# Minimum version of the Windows PowerShell engine required by this module
 	PowerShellVersion = '2.0'
@@ -64,7 +64,7 @@
 	CmdletsToExport = '*'
 
 	# Variables to export from this module
-	VariablesToExport = @('GSD')
+	VariablesToExport = @('GSDConfig')
 
 	# Aliases to export from this module
 	AliasesToExport = ''
@@ -73,7 +73,7 @@
 	# ModuleList = @()
 
 	# List of all files packaged with this module
-	FileList = 'Common.psm1'
+	FileList = 'Configuration.psm1'
 
 	# Private data to pass to the module specified in RootModule/ModuleToProcess
 	# PrivateData = ''
