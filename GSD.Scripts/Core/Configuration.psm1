@@ -23,15 +23,14 @@ Function Get-Config() {
       Load configuration from settings.xml and store in 'global' variable
 	#>
 
-    Write-GsdLog -Message "- Processing $($GSD.SettingsFilePath)" -Level $GSD.LogLevel.Normal
+    Write-GsdLog -Message "- Processing $($GSD.SettingsFilePath)" -Level $GSD.LogLevel.Always
 	[xml]$configDoc = Get-Content $GSD.SettingsFilePath
 
-	# Get general settings
-    Write-GsdLog -Message "- Getting general settings" -Level $GSD.LogLevel.Normal
-	$settings = ConvertConfigSectionToHashtable $configDoc.Settings
+	# Get general settings - currently no general settings
+    # Write-GsdLog -Message "- Getting general settings" -Level $GSD.LogLevel.Always
 
 	# Get environment specific settings, overwrite general settings where applicable
-    Write-GsdLog -Message "- Getting environment settings for '$($GSD.TargetEnvironment)'" -Level $GSD.LogLevel.Normal
+    Write-GsdLog -Message "- Getting environment settings for '$($GSD.TargetEnvironment)'" -Level $GSD.LogLevel.Always
 	$envSettings = ConvertConfigSectionToHashtable $configDoc.SelectSingleNode("//Environment[@name='$($GSD.TargetEnvironment)']")
 }
 

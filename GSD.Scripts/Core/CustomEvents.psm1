@@ -22,7 +22,7 @@ Function Import-CustomEvents() {
 	$customEventScripts = @()
 	$customEventFiles = Get-ChildItem ".\Events" | Where {$_.Name -like "*.ps1"} 
 	$customEventFiles | ForEach { 
-		Write-GsdLog -Message "- loading $_" -Level $GSD.LogLevel.Normal
+		Write-GsdLog -Message "- loading $_" -Level $GSD.LogLevel.Always
         # Keep line breaks - otherwise multi-line functions will break
 		$script = (Get-Content .\Events\$_) -Join "`n"
 		$customEventScript = @{}
@@ -44,7 +44,7 @@ Function Test-CustomEvents() {
 
     $isValid = $true
     $customEventScripts | ForEach {
-        Write-GsdLog -Message "- processing $($_.FileName)" -Level $GSD.LogLevel.Normal
+        Write-GsdLog -Message "- processing $($_.FileName)" -Level $GSD.LogLevel.Always
         $functions = $_.ScriptBlock.Ast.FindAll({$args[0] -is [System.Management.Automation.Language.FunctionDefinitionAst]}, $true)
         $noDeploy = $functions.Find({$args[0].Name -eq "Execute-OnDeploy"}) -eq $null
         $noPreDeploy = $functions.Find({$args[0].Name -eq "Execute-OnPreDeploy"}) -eq $null
@@ -71,7 +71,7 @@ Function Invoke-CustomEventsPreDeploy($customEventScripts) {
 	#>
 
     $customEventScripts | ForEach {
-        Write-GsdLog -Message "- running OnPreDeploy from $($_.FileName)" -Level $GSD.LogLevel.Normal -Indent
+        Write-GsdLog -Message "- running OnPreDeploy from $($_.FileName)" -Level $GSD.LogLevel.Always -Indent
         . $_.ScriptBlock
 	    Execute-OnPreDeploy
         Pop-GsdIndentLevel
@@ -85,7 +85,7 @@ Function Invoke-CustomEventsDeploy($customEventScripts) {
 	#>
 
     $customEventScripts | ForEach {
-        Write-GsdLog -Message "- running OnDeploy from $($_.FileName)" -Level $GSD.LogLevel.Normal -Indent
+        Write-GsdLog -Message "- running OnDeploy from $($_.FileName)" -Level $GSD.LogLevel.Always -Indent
         . $_.ScriptBlock
 	    Execute-OnDeploy
         Pop-GsdIndentLevel
@@ -99,7 +99,7 @@ Function Invoke-CustomEventsPostDeploy($customEventScripts) {
 	#>
 
     $customEventScripts | ForEach {
-	    Write-GsdLog -Message "- running OnPostDeploy from $($_.FileName)" -Level $GSD.LogLevel.Normal -Indent
+	    Write-GsdLog -Message "- running OnPostDeploy from $($_.FileName)" -Level $GSD.LogLevel.Always -Indent
         . $_.ScriptBlock
 	    Execute-OnPostDeploy
         Pop-GsdIndentLevel

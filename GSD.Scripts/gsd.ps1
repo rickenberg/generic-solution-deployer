@@ -21,7 +21,7 @@ Param
     [string]$TargetEnvironment = "DEV", 
 
     [ValidateSet('Always', 'Success', 'Error', 'Warning', 'Information', 'Normal')]
-    [string]$LogLevel = "Normal",
+    [string]$LogLevel = "Success",
 
     [bool]$PromptForCredentials = $false,
 
@@ -54,42 +54,42 @@ Start-GsdTracing
 Write-GsdIntro
 
 # Load
-Write-GsdLog -Message "LOAD: Loading GSD components" -Level $GSD.LogLevel.Normal -Indent
+Write-GsdLog -Message "LOAD: Loading GSD components" -Level $GSD.LogLevel.Always -Indent
 Pop-GsdIndentLevel
 
 # 1. Load configuration
-Write-GsdLog -Message "LOAD: Loading configuration" -Level $GSD.LogLevel.Normal -Indent
+Write-GsdLog -Message "LOAD: Loading configuration" -Level $GSD.LogLevel.Always -Indent
 Get-GsdConfig
 Pop-GsdIndentLevel
 
 # 2. Load modules
-Write-GsdLog -Message "LOAD: Loading modules" -Level $GSD.LogLevel.Normal -Indent
+Write-GsdLog -Message "LOAD: Loading modules" -Level $GSD.LogLevel.Always -Indent
 Pop-GsdIndentLevel
 
 # 3. Load custom events
-Write-GsdLog -Message "LOAD: Loading custom events" -Level $GSD.LogLevel.Normal -Indent
+Write-GsdLog -Message "LOAD: Loading custom events" -Level $GSD.LogLevel.Always -Indent
 $customEventScripts = Import-GsdCustomEvents
 Pop-GsdIndentLevel
 
 # Validate
-Write-GsdLog -Message "VALIDATE: Validating GSD components" -Level $GSD.LogLevel.Normal -Indent
+Write-GsdLog -Message "VALIDATE: Validating GSD components" -Level $GSD.LogLevel.Always -Indent
 Pop-GsdIndentLevel
 
 # 1. Validate configuration
-Write-GsdLog -Message "VALIDATE: Validating configuration" -Level $GSD.LogLevel.Normal -Indent
+Write-GsdLog -Message "VALIDATE: Validating configuration" -Level $GSD.LogLevel.Always -Indent
 Pop-GsdIndentLevel
 
 # 2. Validate modules
-Write-GsdLog -Message "VALIDATE: Validating modules" -Level $GSD.LogLevel.Normal -Indent
+Write-GsdLog -Message "VALIDATE: Validating modules" -Level $GSD.LogLevel.Always -Indent
 Pop-GsdIndentLevel
 
 # 3. Validate custom events
-Write-GsdLog -Message "VALIDATE: Validating custom events" -Level $GSD.LogLevel.Normal -Indent
+Write-GsdLog -Message "VALIDATE: Validating custom events" -Level $GSD.LogLevel.Always -Indent
 Test-GsdCustomEvents
 Pop-GsdIndentLevel
 
 # Run deployment
-Write-GsdLog -Message "DEPLOY: Starting deployment" -Level $GSD.LogLevel.Normal -Indent
+Write-GsdLog -Message "DEPLOY: Starting deployment" -Level $GSD.LogLevel.Always -Indent
 # Determine deploy action (deploy|redeploy|rollback|update)
 
 # 1. Run pre deploy action
