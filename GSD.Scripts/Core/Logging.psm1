@@ -37,18 +37,20 @@ Function Write-Log([string]$Message, [int]$Level, [switch]$NoNewline, [switch]$I
       No indentation is used (no matter what the current level is)
 	#>
 
-	# TODO
-	# if($type -gt $Script:LogLevel){
-	#    return
-	#}
+	if($Level -gt $GSD.MinLogLevel){
+        # Skip log entry
+	    return
+	}
+
 	$foregroundColor = "Gray"
 	$backgroundColor = "Blue"
 	switch ($Level){
-	    $GSD.LogLevel.Success          { $foregroundColor = "Green" }
-	    $GSD.LogLevel.Error            { $foregroundColor = "Red" }
-	    $GSD.LogLevel.Warning          { $foregroundColor = "Yellow" }
-	    $GSD.LogLevel.Information      { $foregroundColor = "White" }
-	    $GSD.LogLevel.Normal           { $foregroundColor = "Gray" }
+        $GSD.LogLevel.Always { $foregroundColor = "White" }
+	    $GSD.LogLevel.Success { $foregroundColor = "Green" }
+	    $GSD.LogLevel.Error { $foregroundColor = "Red" }
+	    $GSD.LogLevel.Warning { $foregroundColor = "Yellow" }
+	    $GSD.LogLevel.Information { $foregroundColor = "White" }
+	    $GSD.LogLevel.Normal { $foregroundColor = "Gray" }
 	}
 	if($Outdent){ Pop-IndentLevel }
 	if(!$NoIndent){
@@ -151,4 +153,41 @@ Filter Set-ColorPattern([string]$ErrorPattern, [string]$SuccessPattern) {
             Log
         }
     }
+}
+
+Function Write-Intro() {
+    $now = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $psVersion = $Host.Version.ToString()
+	$splash = @"
+  _______  _______ .__   __.  _______ .______       __    ______                      
+ /  _____||   ____||  \ |  | |   ____||   _  \     |  |  /      |                     
+|  |  __  |  |__   |   \|  | |  |__   |  |_)  |    |  | |  ,----'                     
+|  | |_ | |   __|  |  .    | |   __|  |      /     |  | |  |                          
+|  |__| | |  |____ |  |\   | |  |____ |  |\  \----.|  | |  '----.                     
+ \__________._________| \__| |_______|| __ `.___________.\____________   .__   __.    
+    /       | /  __  \  |  |     |  |  |  | |           ||  |  /  __  \  |  \ |  |    
+   |   (----'|  |  |  | |  |     |  |  |  | '---|  |----'|  | |  |  |  | |   \|  |    
+    \   \    |  |  |  | |  |     |  |  |  |     |  |     |  | |  |  |  | |  .    |    
+.----)   |   |  '--'  | |  '----.|  '--'  |     |  |     |  | |  '--'  | |  |\   |    
+|_______/  ________.____________| \___________  |____    ____  _______/.______\__|    
+|       \ |   ____||   _  \  |  |      /  __  \  \   \  /   / |   ____||   _  \       
+|  .--.  ||  |__   |  |_)  | |  |     |  |  |  |  \   \/   /  |  |__   |  |_)  |      
+|  |  |  ||   __|  |   ___/  |  |     |  |  |  |   \_    _/   |   __|  |      /       
+|  '--'  ||  |____ |  |      |  '----.|  '--'  |     |  |     |  |____ |  |\  \----.  
+|_______/ |_______|| _|      |_______| \______/      |__|     |_______|| _| '._____|  
+GSD - Generic Solution Deployer written by Bernd Rickenberg
+Version:    $($GSD.Version)
+PS Version: $psVersion
+License:    MS-PL
+Machine:    $($env:COMPUTERNAME)
+User:       $($env:USERDOMAIN)\$($env:USERNAME)
+Command:    $($GSD.DeploymentCommandTitle)
+Env:        $($GSD.TargetEnvironment)
+Location:   $($GSD.BaseDir)
+Date:       $($now)
+
+"@
+
+
+	Write-GsdLog -Message $splash -Level $GSD.LogLevel.Always
 }

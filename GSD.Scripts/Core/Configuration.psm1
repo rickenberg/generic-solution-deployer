@@ -42,25 +42,17 @@ Function ConvertConfigSectionToHashtable($settingsNode) {
 	#>
 
     if ($settingsNode -eq $null) {
-        # Config empty - probably not found
+        Write-GsdLog -Message "- Configuration not found. Skipping" -Level $GSD.LogLevel.Warning
         return
     }
 
     $result = @{ Variables = @{} }
 
-    # Get GSD settings
-    # TODO: Use the proper types - boolean and int
-    foreach($setting in $settingsNode.Gsd.ChildNodes) {
-        $key = $setting.Name
-        $value = $setting.InnerText
-        SetConfigValue -config $Script:GsdConfig -key $key -value $value
-    }
-
     # Get variables
     foreach($variable in $settingsNode.Variables.ChildNodes) {
         $key = $variable.Name
         $value = $variable.InnerText
-        SetConfigValue -config $Script:GsdConfig.Variables -key $key -value $value
+        SetConfigValue -config $Script:GSDConfig.Variables -key $key -value $value
     }
 }
 
@@ -71,6 +63,7 @@ Function SetConfigValue($config, $key, $value) {
 	#>
 
     if ([System.String]::IsNullOrWhiteSpace($value)) {
+        # Skip empty values
         return
     }
     if ($config.ContainsKey($key)) {

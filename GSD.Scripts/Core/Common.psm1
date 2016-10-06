@@ -16,7 +16,7 @@
 # Variables from this module to be exported. They are used for general settings.
 $GSD = $null
 
-Function Initialize-Script($ScriptPath, $Command, $Environment) {
+Function Initialize-Script($ScriptPath, $Command, $Environment, $LogLevelTitle) {
 	<#
 	  .SYNOPSIS
 	  Initializes the main GSD script. Sets global variables and parses the command line parameters.
@@ -27,11 +27,12 @@ Function Initialize-Script($ScriptPath, $Command, $Environment) {
                         DisplayName ="Generic Solution Deployer (GSD)"
                         StatusWidth = 79
 	                    LogLevel = @{
-                            Success     = 0
-	                        Error       = 1
-	                        Warning     = 2
-	                        Information = 3
-	                        Normal      = 4
+                            Always      = 0
+                            Success     = 1
+	                        Error       = 2
+	                        Warning     = 3
+	                        Information = 4
+	                        Normal      = 5
 
 	                    }
 	                    Commands = @{
@@ -49,13 +50,12 @@ Function Initialize-Script($ScriptPath, $Command, $Environment) {
                         TargetEnvironment = $Environment
 	                }
 
-    $Script:GSD.DeploymentCommand = Get-Parameter -value $Command -values $GSD.Commands -default $GSD.Commands.Deploy
-    $Script:GSD.DeploymentCommandTitle = Get-ParameterName -value $Command -values $GSD.Commands
-
-	# Set default environment to DEV
-	if ([System.String]::IsNullOrWhiteSpace($Script:GSD.TargetEnvironment)) {
-		$Script:GSD.TargetEnvironment = "DEV"
-	}
+    $GSD.DeploymentCommandTitle = $Command
+    $GSD.DeploymentCommand = Get-Parameter -value $Command -values $GSD.Commands
+ 
+    # Set log level
+    $GSD.MinLogLevelTitle = $LogLevelTitle
+    $GSD.MinLogLevel = Get-Parameter -value $LogLevelTitle -values $GSD.LogLevel
 }
 
 Function Get-DirOrCreateIt($path) {
@@ -72,8 +72,7 @@ Function Get-DirOrCreateIt($path) {
 }
 
 Function Get-Parameter([string]$value = $(throw "You have to specify the desired value"), 
-	                    [System.Collections.Hashtable]$values = $(throw "You have to specify the values HashTable"), 
-	                    [int]$default = 0) {
+	                    [System.Collections.Hashtable]$values = $(throw "You have to specify the values HashTable")) {
 	<#
 	  .SYNOPSIS
 	  Finds the given command-line parameter in a hashtable and returns the value.
@@ -84,23 +83,9 @@ Function Get-Parameter([string]$value = $(throw "You have to specify the desired
 	        return $values[$key]
 	    }
 	}
-	return $default
-}
 
-Function Get-ParameterName([string]$value = $(throw "You have to specify the desired value"), 
-	                    [System.Collections.Hashtable]$values = $(throw "You have to specify the values HashTable")) {
-	<#
-	  .SYNOPSIS
-	  Finds value in hastable for the given key.
-	#>
-	
-	foreach($item in $values.GetEnumerator()) {
-	    if($item.Value -eq $value) {
-	        return $item.Key
-	    }
-	}
-
-	return ""
+    # Never happens
+	return $null
 }
 
 # Work-around for variable export. It is not enough to set this in psd1 file. No idea why.

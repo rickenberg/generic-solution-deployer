@@ -13,9 +13,34 @@
 	https://github.com/rickenberg/generic-solution-deployer
 #>
 
+Param 
+(
+    [ValidateSet('Deploy', 'Redeploy', 'Rollback', 'Update')]
+    [string]$Command = "Deploy",
+
+    [string]$TargetEnvironment = "DEV", 
+
+    [ValidateSet('Always', 'Success', 'Error', 'Warning', 'Information', 'Normal')]
+    [string]$LogLevel = "Normal",
+
+    [bool]$PromptForCredentials = $false,
+
+    [bool]$createNewPSSession = $false
+)
+
 # Set working directory (compatible to all PS versions)
 $scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
 Set-Location $scriptPath
+
+# Preflight check
+# Check PS version
+
+# Get credentials
+#Get-Credential
+
+# Start new session
+#PowerShell -Command Start-Process "$PSHOME\powershell.exe"
+
 
 # Load GSD core modules
 Import-Module .\Core\Common -Force -Prefix Gsd
@@ -24,10 +49,9 @@ Import-Module .\Core\Logging -Force -Prefix Gsd
 Import-Module .\Core\CustomEvents -Force -Prefix Gsd
 
 # Initialize
-Initialize-GsdScript $scriptPath
+Initialize-GsdScript -ScriptPath $scriptPath -Command $Command -Environment $TargetEnvironment -LogLevelTitle $LogLevel
 Start-GsdTracing
-
-# Preflight check
+Write-GsdIntro
 
 # Load
 Write-GsdLog -Message "LOAD: Loading GSD components" -Level $GSD.LogLevel.Normal -Indent
@@ -66,7 +90,7 @@ Pop-GsdIndentLevel
 
 # Run deployment
 Write-GsdLog -Message "DEPLOY: Starting deployment" -Level $GSD.LogLevel.Normal -Indent
-# Determine deploy action (deploy|redeploy|rollback)
+# Determine deploy action (deploy|redeploy|rollback|update)
 
 # 1. Run pre deploy action
 Invoke-GsdCustomEventsPreDeploy $customEventScripts
@@ -78,6 +102,8 @@ Invoke-GsdCustomEventsDeploy $customEventScripts
 Invoke-GsdCustomEventsPostDeploy $customEventScripts
 
 Pop-GsdIndentLevel
+
+Write-GsdLog -Message "Deployment completed successfully" -Level $GSD.LogLevel.Success
 
 # Stop logging
 Stop-GsdTracing
