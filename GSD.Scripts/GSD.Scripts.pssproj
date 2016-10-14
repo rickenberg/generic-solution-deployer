@@ -32,8 +32,8 @@
     <Folder Include="Events\" />
     <Folder Include="Logs\" />
     <Folder Include="Modules\" />
+    <Folder Include="Dependencies\" />
     <Folder Include="Solution\" />
-    <Folder Include="Solution\AllFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Configuration.psd1" />
@@ -45,19 +45,13 @@
     <Compile Include="Core\GsdCore.psd1" />
     <Compile Include="Core\Logging.psd1" />
     <Compile Include="Core\Logging.psm1" />
+    <Compile Include="Events\02-DeployPP.ps1" />
     <Compile Include="Events\01-CopyFiles.ps1" />
     <Compile Include="gsd.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\settings.xml" />
     <Content Include="Config\step.01-CopyFiles.xml" />
-    <Content Include="Solution\AllFiles\App.config" />
-    <Content Include="Solution\AllFiles\HelloWorldJob.cs" />
-    <Content Include="Solution\AllFiles\HelloWorldTimerJob.csproj" />
-    <Content Include="Solution\AllFiles\packages.config" />
-    <Content Include="Solution\AllFiles\Program.cs" />
-    <Content Include="Solution\AllFiles\SharePointContext.cs" />
-    <Content Include="Solution\AllFiles\TokenHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />

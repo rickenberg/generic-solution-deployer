@@ -8,12 +8,14 @@
       <Variables>
         <Variable name="sourceFolder">AllFiles</Variable>
         <Variable name="targetPath">d:\solution\AllFiles</Variable>
+        <Variable name="targetUrl">http://intranet</Variable>
       </Variables>
     </Environment>
     <Environment name="TEST">
       <Variables>
         <Variable name="sourceFolder">AllFiles</Variable>
         <Variable name="targetPath">d:\solution\AllFiles-TEST</Variable>
+        <Variable name="targetUrl">http://intranet</Variable>
       </Variables>
     </Environment>
   </Environments>

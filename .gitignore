@@ -245,3 +245,6 @@ ModelManifest.xml
 .fake/
 /GSD.Scripts/Solution/AllFiles
 /GSD.Scripts/Config/step.01-CopyFiles.xml
+/GSD.Scripts/Solution/ProgrammingPlan
+/GSD.Scripts/Events/02-DeployPP.ps1
+/GSD.Scripts/Dependencies

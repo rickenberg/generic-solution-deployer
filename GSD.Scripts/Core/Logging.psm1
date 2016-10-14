@@ -57,7 +57,7 @@ Function Write-Log([string]$Message, [int]$Level, [switch]$NoNewline, [switch]$I
 	    $indentChars = " " * (2 * $GSD.LogIndentVal)
 	}
 
-		$loggingHost = (Get-Host).Name
+	$loggingHost = (Get-Host).Name
     if(($loggingHost -eq "ConsoleHost" -or $loggingHost -eq 'Windows PowerShell ISE Host') -and -not $isAppHost){
 	    if($NoNewline)
 	    {
@@ -69,12 +69,14 @@ Function Write-Log([string]$Message, [int]$Level, [switch]$NoNewline, [switch]$I
     }
     # always log to file
 	if($NoNewline){
-        [System.IO.File]::AppendAllText($script:LogFile, ($indentChars + $Message), [System.Text.Encoding]::Default)
+        #[System.IO.File]::AppendAllText($script:LogFile, ($indentChars + $Message), [System.Text.Encoding]::Default)
 	}
     else{
-        Add-Content $script:LogFile ($indentChars + $Message)
+        #Add-Content $script:LogFile ($indentChars + $Message)
 	}
-	if($Indent){ Push-IndentLevel }
+	if($Indent){ 
+        Push-IndentLevel 
+    }
 }
 
 Function Pop-IndentLevel() {
