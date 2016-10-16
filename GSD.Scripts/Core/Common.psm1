@@ -43,10 +43,12 @@ Function Initialize-Script($ScriptPath, $Command, $Environment, $LogLevelTitle) 
 	                    }
                         LogIndentVal = 0
                         BaseDir = $ScriptPath
-						ConfigDir = "$($ScriptPath)\Config"
-						SettingsFilePath = "$($ScriptPath)\Config\settings.xml"
-                        LogDir = Get-DirOrCreateIt -path "$($ScriptPath)\Logs"
-						SolutionDir = "$($ScriptPath)\Solution"
+						ConfigDir = "$($ScriptPath)\..\Config"
+						EventsDir = "$($ScriptPath)\..\Events"
+						LogDir = Get-DirOrCreateIt -path "$($ScriptPath)\..\Logs"
+						ModulesDir = "$($ScriptPath)\..\Modules"
+						SettingsFilePath = "$($ScriptPath)\..\Config\settings.xml"
+						SolutionDir = "$($ScriptPath)\..\Solution"
                         TargetEnvironment = $Environment
 	                }
 

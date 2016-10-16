@@ -33,6 +33,7 @@
     <Folder Include="Logs\" />
     <Folder Include="Modules\" />
     <Folder Include="Dependencies\" />
+    <Folder Include="Modules\Add-SPFile\" />
     <Folder Include="Solution\" />
   </ItemGroup>
   <ItemGroup>
@@ -43,11 +44,13 @@
     <Compile Include="Core\CustomEvents.psd1" />
     <Compile Include="Core\CustomEvents.psm1" />
     <Compile Include="Core\GsdCore.psd1" />
+    <Compile Include="Core\GSD_Main.ps1" />
     <Compile Include="Core\Logging.psd1" />
     <Compile Include="Core\Logging.psm1" />
     <Compile Include="Events\02-DeployPP.ps1" />
     <Compile Include="Events\01-CopyFiles.ps1" />
     <Compile Include="gsd.ps1" />
+    <Compile Include="Modules\Add-SPFile\Add-SPFile.psm1" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\settings.xml" />
