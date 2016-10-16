@@ -52,7 +52,7 @@ Pop-GsdIndentLevel
 
 # 2. Load modules
 Write-GsdLog -Message "LOAD: Loading modules" -Level $GSD.LogLevel.Always -Indent
-Import-Module .\Modules\Add-SPFile\Add-SPFile.psm1 -Force
+Import-Module "$($GSD.ModulesDir)\Add-SPFile\Add-SPFile.psm1" -Force
 Pop-GsdIndentLevel
 
 # 3. Load custom events
@@ -74,7 +74,7 @@ Pop-GsdIndentLevel
 
 # 3. Validate custom events
 Write-GsdLog -Message "VALIDATE: Validating custom events" -Level $GSD.LogLevel.Always -Indent
-Test-GsdCustomEvents
+Test-GsdCustomEvents $customEventScripts
 Pop-GsdIndentLevel
 
 # Run deployment

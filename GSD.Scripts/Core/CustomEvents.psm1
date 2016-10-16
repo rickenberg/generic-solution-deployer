@@ -20,11 +20,11 @@ Function Import-CustomEvents() {
 	#>
 
 	$customEventScripts = @()
-	$customEventFiles = Get-ChildItem ".\Events" | Where {$_.Name -like "*.ps1"} 
+	$customEventFiles = Get-ChildItem "$($GSD.EventsDir)" | Where {$_.Name -like "*.ps1"} 
 	$customEventFiles | ForEach { 
 		Write-GsdLog -Message "- loading $_" -Level $GSD.LogLevel.Always
         # Keep line breaks - otherwise multi-line functions will break
-		$script = (Get-Content .\Events\$_) -Join "`n"
+		$script = (Get-Content "$($GSD.EventsDir)\$_") -Join "`n"
 		$customEventScript = @{}
 		$customEventScript.FileName = $_
 		$customEventScript.Script = ReplaceVariables -script $script
@@ -36,7 +36,7 @@ Function Import-CustomEvents() {
 	return $customEventScripts
 }
 
-Function Test-CustomEvents() {
+Function Test-CustomEvents($customEventScripts) {
 	<# 
 		.SYNOPSIS
 	    Checks that the custom events have defined an event handler for all deployment events.
