@@ -25,7 +25,7 @@ Param
 
     [bool]$PromptForCredentials = $false,
 
-    [bool]$RunInNewSession = $false
+    [switch]$RunInNewSession = $false
 )
 
 $scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
@@ -34,7 +34,7 @@ $scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
 # Check PS version
 
 # Get credentials
-#Get-Credential
+#$creds = Get-Credential
 
 # Execute main script
 $scriptCommand = "$scriptPath\Core\GSD_Main.ps1 -Command $Command -TargetEnvironment $TargetEnvironment -LogLevel $LogLevel -RunningInNewSession $RunInNewSession"

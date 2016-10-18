@@ -52,7 +52,11 @@ Pop-GsdIndentLevel
 
 # 2. Load modules
 Write-GsdLog -Message "LOAD: Loading modules" -Level $GSD.LogLevel.Always -Indent
-Import-Module "$($GSD.ModulesDir)\Add-SPFile\Add-SPFile.psm1" -Force
+$moduleFiles = Get-ChildItem "$($GSD.ModulesDir)" -Recurse | Where {$_.Name -like "*.gsd.psm1"} 
+$moduleFiles | ForEach { 
+	Write-GsdLog -Message "- loading $_" -Level $GSD.LogLevel.Always
+	Import-Module $_.FullName -Force
+}
 Pop-GsdIndentLevel
 
 # 3. Load custom events
@@ -103,3 +107,5 @@ if ($RunningInNewSession -eq $true) {
 	Write-Host "Done - Press [enter] to close window"
 	Read-Host
 }
+
+CD .. | Out-Null

@@ -1,21 +1,18 @@
 <Settings>
 	<Variables>
-		<Variable name="sourceFolder">test</Variable>
-		<Variable name="targetPath"><![CDATA[test test]]></Variable>
-	</Variables>
+    <Variable name="targetUrl">http://intranet</Variable>
+  </Variables>
   <Environments>
     <Environment name="DEV">
       <Variables>
-        <Variable name="sourceFolder">AllFiles</Variable>
-        <Variable name="targetPath">d:\solution\AllFiles</Variable>
-        <Variable name="targetUrl">http://intranet</Variable>
       </Variables>
     </Environment>
     <Environment name="TEST">
       <Variables>
-        <Variable name="sourceFolder">AllFiles</Variable>
-        <Variable name="targetPath">d:\solution\AllFiles-TEST</Variable>
-        <Variable name="targetUrl">http://intranet</Variable>
+      </Variables>
+    </Environment>
+    <Environment name="PROD">
+      <Variables>
       </Variables>
     </Environment>
   </Environments>
